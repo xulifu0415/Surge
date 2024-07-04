@@ -63,42 +63,46 @@ async function main() {
         console.log("开始阅读")
         let detail = await commonGet('/api/user_mumber/account_detail')
         let name = detail.data.nick_name;
-        let channelList = await readGet(`/home/TmApi/channelList&channelId=6530db1e71a9ed74577e468e&userId=${accountId}&sessionId=${sessionId}`)
-        let getUserInformation = await readGet(`/home/TmApi/getUserInformation&accountId=${accountId}&username=${encodeURI(name)}&type=jsonp`)
-        if (getUserInformation.data.points == channelList.length) {
-            console.log(`阅读已完成`)
-        } else {
+        let channelArr = [{"id":1,"channelId":"6530daf779f6be358bba1522"},{"id":2,"channelId":"6530dae171a9ed74577e4689"},{"id":3,"channelId":"6530db1e71a9ed74577e468e"},
+            {"id":4,"channelId":"657fe99979f6be03b8fd7fb8"},{"id":5,"channelId":"657fe9ad79f6be03b8fd7fb9"},{"id":6,"channelId":"65a9e12879f6be03b8fd807d"},{"id":7,"channelId":"65a9e13b79f6be03b8fd807e"},
+            {"id":8,"channelId":"65baf8d979f6be5b358ba618"},{"id":9,"channelId":"65baf8ed79f6be5b358ba619"}]
+        for (const item of channelArr) {
+            let channelList = await readGet(`/home/TmApi/channelList&channelId=${item.channelId}&userId=${accountId}&sessionId=${sessionId}`)
+            if (channelList.length == 0) {
+                continue
+            }
+            console.log(`当前第${item.id}轮阅读`)
+            let getUserInformation = await readGet(`/home/TmApi/getUserInformation&accountId=${accountId}&username=${encodeURI(name)}&type=jsonp`)
             for (const channel of channelList) {
+                let detail = await commonGet(`/api/article/detail?id=${channel.id}`)
+                console.log(`文章：${detail.data.article.list_title}`)
                 if (channel.is_read == 'ok') {
                     console.log(`已阅读`)
                 } else {
-                    let detail = await commonGet(`/api/article/detail?id=${channel.id}`)
-                    console.log(`文章：${detail.data.article.list_title}`)
                     let read = await commonGet(`/api/article/read_time?channel_article_id=${channel.id}&read_time=3000`)
                     console.log(`阅读：${read.message}`)
                     let getUserRead = await readGet(`/home/TmApi/getUserRead&accountId=${accountId}&articleId=${channel.id}&type=jsonp`)
                     if (getUserRead.read_effective == 1) {
-                        let finish = await readGet(`home/baoming/postBaoming/&activityId=428&name=${accountId}&city=${channel.id}&gender=3&cellphone=${phone_number}&type=jsonp`)
+                        let finish = await readGet(`home/baoming/postBaoming/&activityId=428&name=${accountId}&city=${channel.id}&gender=${item.id}&cellphone=${phone_number}&type=jsonp`)
                         console.log(`完成任务：${finish.msg}`)
                     } else {
                         console.log(getUserRead)
                     }
                 }
             }
-            let add = await readGet(`/home/TmApi/addPrizenum&accountId=${accountId}&round=3&num=${channelList.length}&type=jsonp`)
+            let add = await readGet(`/home/TmApi/addPrizenum&accountId=${accountId}&round=${item.id}&num=${channelList.length}&type=jsonp`)
             console.log(add.msg)
-        }
-        getUserInformation = await readGet(`/home/TmApi/getUserInformation&accountId=${accountId}&username=${encodeURI(name)}&type=jsonp`)
-        console.log(`拥有${getUserInformation.data.cnum}次抽奖次数`)
-        if (getUserInformation.data.userid) {
-            for (let i = 0; i < parseInt(getUserInformation.data.cnum); i++) {
-                let lottery = await lotteryGet(`/Home/ChoujiangNew/apiChoujiang&openId=${accountId}&action=cj&typeId=122&address=&userid=${getUserInformation.data.userid}&_=${Date.now()}`)
-                console.log(lottery)
+            getUserInformation = await readGet(`/home/TmApi/getUserInformation&accountId=${accountId}&username=${encodeURI(name)}&type=jsonp`)
+            console.log(`拥有${getUserInformation.data.cnum}次抽奖次数`)
+            if (getUserInformation.data.userid) {
+                for (let i = 0; i < parseInt(getUserInformation.data.cnum); i++) {
+                    let lottery = await lotteryGet(`/Home/ChoujiangNew/apiChoujiang&openId=${accountId}&action=cj&typeId=122&address=&userid=${getUserInformation.data.userid}&_=${Date.now()}`)
+                    console.log(lottery)
+                }
+            } else {
+                $.msg($.name, `用户${phone_number}`, '先绑定微信');
             }
-        } else {
-            $.msg($.name, `用户${phone_number}`, '先绑定微信');
         }
-
         console.log("————————————")
         console.log("开始签到")
         let sign = await commonGet('/api/user_mumber/sign')
