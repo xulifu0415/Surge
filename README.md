@@ -3,7 +3,9 @@
 |   Application   |                                      Script name                                       |   Available   | Maintenance |
 |:---------------:|:--------------------------------------------------------------------------------------:|:-------------:|:-----------:|
 |        安徽电信         |    [AnHuiTelecom](https://github.com/xzxxn777/Surge/blob/main/Script/AnHuiTelecom)     | ✅(2024/06/15) |     ✅️      |
+|        阿叔同城         |    [ASTC](https://github.com/xzxxn777/Surge/blob/main/Script/ASTC)     | ✅(2024/07/04) |     ✅️      |
 |        好奇车生活         |         [Cheryfs](https://github.com/xzxxn777/Surge/blob/main/Script/Cheryfs)          | ✅(2024/06/03) |     ✅️      |
+|        东方棘市         |         [Cheryfs](https://github.com/xzxxn777/Surge/blob/main/Script/DFJS)          | ✅(2024/07/03) |     ✅️      |
 |        Github监控         |         [Github](https://github.com/xzxxn777/Surge/blob/main/Script/Github)          | ✅(2024/06/23) |     ✅️      |
 |      古井贡酒       |          [GuJing](https://github.com/xzxxn777/Surge/blob/main/Script/GuJing)           | ✅(2024/04/24) |      ✅      |
 |        海天美味馆         |         [HaiTian](https://github.com/xzxxn777/Surge/blob/main/Script/HaiTian)          | ✅(2024/06/15) |     ✅️      |
@@ -13,10 +15,12 @@
 |     IQOO社区      |            [IQOO](https://github.com/xzxxn777/Surge/blob/main/Script/IQOO)             | ✅(2024/05/04) |     ✅️      |
 |     健达福利社      |            [JDFLS](https://github.com/xzxxn777/Surge/blob/main/Script/JDFLS)             | ✅(2024/06/20) |     ✅️      |
 |     蒙牛      |         [MengNiu](https://github.com/xzxxn777/Surge/blob/main/Script/MengNiu)          | ✅(2024/04/24) |      ✅      |
+|     毛铺草本荟      |         [MengNiu](https://github.com/xzxxn777/Surge/blob/main/Script/MPCBH)          | ✅(2024/07/03) |      ✅      |
 |     麦斯威尔福利社      |         [MSWEFLS](https://github.com/xzxxn777/Surge/blob/main/Script/MSWEFLS)          | ✅(2024/06/21) |      ✅      |
 |      攀升科技+      |            [PSKJ](https://github.com/xzxxn777/Surge/blob/main/Script/PSKJ)             | ✅(2024/05/06) |     ✅️      |
 |        红牛会员俱乐部         |         [RedBull](https://github.com/xzxxn777/Surge/blob/main/Script/RedBull)          | ✅(2024/05/25) |     ✅️      |
 |        日清食品体验馆         |         [RQSP](https://github.com/xzxxn777/Surge/blob/main/Script/RQSP)          | ✅(2024/06/21) |     ✅️      |
+|        三得利         |         [RQSP](https://github.com/xzxxn777/Surge/blob/main/Script/SDL)          | ✅(2024/07/01) |     ✅️      |
 |       太平通       |     [TaiPingTong](https://github.com/xzxxn777/Surge/blob/main/Script/TaiPingTong)      | ✅(2024/04/24) |      ❌      |
 |       泰康在线       |     [TKZX](https://github.com/xzxxn777/Surge/blob/main/Script/TKZX)      | ✅(2024/06/29) |      ✅       |
 |       统一        |          [TongYi](https://github.com/xzxxn777/Surge/blob/main/Script/TongYi)           | ✅(2023/11/28) |      ✅      |
