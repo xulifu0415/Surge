@@ -63,6 +63,9 @@ async function getCookie() {
     }
     const userId = body.data.uid;
     const nickname = body.data.nickname;
+    if (!userId || !nickname) {
+        return
+    }
     const newData = {"userId": userId, "token": token, "nickname": nickname};
     const index = WuTui.findIndex(e => e.userId == newData.userId);
     if (index !== -1) {
