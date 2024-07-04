@@ -1,5 +1,6 @@
 const $ = new Env('舞推')
 const WuTui = ($.isNode() ? JSON.parse(process.env.WuTui) : $.getjson("WuTui")) || [];
+let Utils = undefined;
 let token = ''
 let userId = ''
 let notice = ''
@@ -13,6 +14,7 @@ let notice = ''
 
 async function main() {
     console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
+    Utils = await loadUtils();
     for (const item of WuTui) {
         userId = item.userId;
         nickname = item.nickname;
@@ -89,7 +91,7 @@ async function commonPost(url,body) {
                 'uid': userId,
                 'user_token': token,
                 'authorization': "Bearer" + token,
-                'client': md5(` wtshigetoutpiaoxitong${url}`).toLowerCase(),
+                'client': Utils.md5(` wtshigetoutpiaoxitong${url}`).toLowerCase(),
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 MicroMessenger/6.8.0(0x16080000) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) XWEB/1191',
                 'accept': '*/*',
                 'platform': '1',
@@ -116,6 +118,26 @@ async function commonPost(url,body) {
             } finally {
                 resolve();
             }
+        })
+    })
+}
+
+async function loadUtils() {
+    let code = ($.isNode() ? process.env.Utils_Code : $.getdata('Utils_Code')) || '';
+    if (code && Object.keys(code).length) {
+        console.log(`✅ ${$.name}: 缓存中存在Utils代码, 跳过下载`)
+        eval(code)
+        return creatUtils();
+    }
+    console.log(`🚀 ${$.name}: 开始下载Utils代码`)
+    return new Promise(async (resolve) => {
+        $.getScript(
+            'https://cdn.jsdelivr.net/gh/xzxxn777/Surge@main/Utils/Utils.js'
+        ).then((fn) => {
+            $.setdata(fn, "Utils_Code")
+            eval(fn)
+            console.log(`✅ Utils加载成功, 请继续`)
+            resolve(creatUtils())
         })
     })
 }
