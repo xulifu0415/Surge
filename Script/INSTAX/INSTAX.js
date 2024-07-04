@@ -30,6 +30,17 @@ async function main() {
             console.log('签到成功')
         }
         console.log("————————————")
+        console.log("幸运大转盘")
+        let chance = await commonGet(`/user/${userId}/draw-activities/42/chance`);
+        console.log(`拥有${chance.data}次抽奖`)
+        for (let i = 0; i < chance.data; i++) {
+            let draw = await commonPost(`/user/${userId}/draw-activities/42/draw`);
+            console.log(`抽奖获得：${draw.data.record.desc}`)
+            if (draw.data.record.expend_type == 'entity') {
+                $.msg($.name, `用户：${id}`, `抽奖获得：${draw.data.record.desc}`);
+            }
+        }
+        console.log("————————————")
         console.log("互动有奖")
         let articles = await commonGet(`/forum/feeds?filters={"examine_status":"pass","status":"!0"}&relations=user&sorts=-status,type&limit=20&offset=1`);
         for (let article of articles.data.items) {
