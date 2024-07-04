@@ -131,8 +131,10 @@ async function main() {
                 let point = aesEncrypt(JSON.stringify({x: getXpos.x_coordinate, y: 5}), secretKey)
                 let check = await jinhuaPost(`/api/captcha/check`,{"activity_id":lotteryId,"module":"bigWheel","cap_token":captchaToken,"point":point})
                 console.log("验证滑块：" + check.message)
-                lottery = await jinhuaPost(`/api/lotterybigwheel/_ac_lottery`,{"id":lotteryId,"app_id":jinhuaAppId,"module":"study","optionHash":""})
-                console.log(`抽奖获得：${lottery.data.title}`)
+                if (check.message == '操作成功') {
+                    lottery = await jinhuaPost(`/api/lotterybigwheel/_ac_lottery`,{"id":lotteryId,"app_id":jinhuaAppId,"module":"study","optionHash":""})
+                    console.log(`抽奖获得：${lottery.data.title}`)
+                }
             } else {
                 console.log(`抽奖获得：${lottery.data.title}`)
             }
