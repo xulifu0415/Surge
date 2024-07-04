@@ -47,12 +47,12 @@ async function main() {
                 console.log(viewMessage.msg)
             }
         }
+        console.log("————————————")
+        console.log("查询积分")
+        let getUserInfo = await commonPost('/o2o.user/getUserInfo')
+        console.log(`拥有积分：${getUserInfo.data.integral}\n`)
+        notice += `用户：${id} 拥有积分: ${getUserInfo.data.integral}\n`
     }
-    console.log("————————————")
-    console.log("查询积分")
-    let getUserInfo = await commonPost('/o2o.user/getUserInfo')
-    console.log(`拥有积分：${getUserInfo.data.integral}\n`)
-    notice += `用户：${id} 拥有积分: ${getUserInfo.data.integral}\n`
     if (notice) {
         $.msg($.name, '', notice);
     }
