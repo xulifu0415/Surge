@@ -29,10 +29,12 @@ async function main() {
         for (const task of taskList.data) {
             console.log('任务：' + task.taskName)
             if (!task.flag) {
-                let getActList = await commonPost('/api/theme/getActList',{"page":1,"rows":10,"uid":userId,"province":"","city":"","index":18})
-                let actId = getActList.data.list[0].id;
-                let addSub = await commonPost(`/api/sub/addSub`,{"uid":userId,"subList":[{"type":2,"paramId":actId},{"type":32,"paramId":actId},{"type":6,"paramId":actId}]})
-                console.log(addSub.msg)
+                if (task.id == 1) {
+                    let getActList = await commonPost('/api/theme/getActList',{"page":1,"rows":10,"uid":userId,"province":"","city":"","index":18})
+                    let actId = getActList.data.list[0].id;
+                    let addSub = await commonPost(`/api/sub/addSub`,{"uid":userId,"subList":[{"type":2,"paramId":actId},{"type":32,"paramId":actId},{"type":6,"paramId":actId}]})
+                    console.log(addSub.msg)
+                }
             } else {
                 console.log('任务已完成')
             }
