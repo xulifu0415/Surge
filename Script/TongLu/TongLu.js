@@ -82,7 +82,7 @@ async function main() {
                     let read = await commonGet(`/api/article/read_time?channel_article_id=${channel.id}&read_time=3000`)
                     console.log(`阅读：${read.message}`)
                     let getUserRead = await readGet(`/home/TmApi/getUserRead&accountId=${accountId}&articleId=${channel.id}&type=jsonp`)
-                    if (getUserRead.read_effective == 1) {
+                    if (getUserRead?.read_effective == 1) {
                         let finish = await readGet(`home/baoming/postBaoming/&activityId=428&name=${accountId}&city=${channel.id}&gender=${item.id}&cellphone=${phone_number}&type=jsonp`)
                         console.log(`完成任务：${finish.msg}`)
                     } else {
