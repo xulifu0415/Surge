@@ -527,6 +527,35 @@
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/xzxxn.JPG",
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/xzxxn.JPG"
       ]
+    },
+    {
+      "id": "QingDaoNews",
+      "name": "青岛新闻",
+      "keys": [
+        "QingDaoNews"
+      ],
+      "scripts": [
+        {
+          "name": "青岛新闻-手动执行",
+          "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/QingDaoNews/QingDaoNews.js"
+        }
+      ],
+      "settings": [
+        {
+          "id": "QingDaoNews",
+          "name": "账号密码",
+          "val": "",
+          "type": "text",
+          "desc": "格式:手机号&密码 手机号&密码"
+        }
+      ],
+      "author": "@xzxxn777",
+      "repo": "https://github.com/xzxxn777/Surge",
+      "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/QingDaoNews/QingDaoNews.js",
+      "icons": [
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/QingDaoNews/QingDaoNewspng",
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/QingDaoNews/QingDaoNews.png"
+      ]
     }
   ]
 }
