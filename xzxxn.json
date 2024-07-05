@@ -460,11 +460,11 @@
       ],
       "scripts": [
         {
-          "name": "发送验证码（填手机号, 保存, 执行）",
+          "name": "发送验证码（填手机号, 选择app, 保存, 执行）",
           "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/CommonNews/SendSms.js"
         },
         {
-          "name": "用验证码登录（填手机号, 验证码, 保存, 执行 ⚠️ 执行后 记得刷新）",
+          "name": "用验证码登录（填手机号, 选择app, 验证码, 密码, 保存, 执行 ⚠️ 执行后 记得刷新）",
           "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/CommonNews/ResetPassword.js"
         }
       ],
