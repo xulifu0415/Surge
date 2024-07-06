@@ -43,6 +43,10 @@ async function main() {
         }
         console.log("————————————")
         console.log("开始抽奖")
+        let share = await commonPost('/signin/share?weexVersion=0.4.3','id=&type=3&destination=AppMessage');
+        console.log(`分享：${share.reason}`)
+        share = await commonPost('/signin/share?weexVersion=0.4.3','id=&type=3&destination=Timeline');
+        console.log(`分享：${share.reason}`)
         let lotteryCount = await commonGet('/api/signin/detail?weexVersion=0.4.3');
         console.log(`拥有${lotteryCount.result.user.free_num}次抽奖次数`)
         let prizeList = lotteryCount.result.prize;
@@ -68,7 +72,6 @@ async function main() {
                             console.log(`当前贝壳：${read.result.shell.shell_num}`)
                         }
                     }
-
                 }
                 if (task.name == '文章转发') {
                     let i = 0;
