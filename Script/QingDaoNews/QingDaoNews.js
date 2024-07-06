@@ -3,6 +3,7 @@ let QingDaoNews = ($.isNode() ? process.env.QingDaoNews : $.getdata("QingDaoNews
 let Utils = undefined;
 let phone = ''
 let password = ''
+let uid = ''
 let cookie = ''
 let notice = ''
 !(async () => {
@@ -32,8 +33,9 @@ async function main() {
             console.log('登录失败')
             continue
         }
+        uid = login.uid;
         cookie = `uid=${login.uid}; username=${login.a_username}; password=${login.a_password};`;
-        let sign = await commonPost('/user_signinday/thing','sign=' + encrypt(`11780522,${Math.floor(new Date().getTime() / 1000)}`));
+        let sign = await commonPost('/user_signinday/thing','sign=' + encrypt(`${uid},${Math.floor(new Date().getTime() / 1000)}`));
         if (sign.result.act) {
             console.log(`签到成功，${sign.result.act.title}`)
         } else {
@@ -62,7 +64,7 @@ async function main() {
                     for (let news of newsList.data) {
                         if (news.id && news.subject) {
                             console.log(`阅读文章：${news.subject}`)
-                            let read = await readGet(`/api/user_message/notice`,encrypt(`11780522,${news.id},60,${Math.floor(new Date().getTime() / 1000)}`));
+                            let read = await readGet(`/api/user_message/notice`,encrypt(`${uid},${news.id},60,${Math.floor(new Date().getTime() / 1000)}`));
                             console.log(`当前贝壳：${read.result.shell.shell_num}`)
                         }
                     }
@@ -105,7 +107,7 @@ async function commonPost(url,body) {
                 'Connection': 'close',
                 'Accept-Encoding': 'gzip',
                 'content-type': 'application/x-www-form-urlencoded',
-                'vtoken': encrypt(`11780522,6.10.17,${Math.floor(new Date().getTime() / 1000)}`),
+                'vtoken': encrypt(`${uid},6.10.17,${Math.floor(new Date().getTime() / 1000)}`),
                 'Cookie': cookie,
                 'User-Agent': 'Mozilla/5.0 (Linux; Android 11; 21091116AC Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.85 Mobile Safari/537.36/com.qdnews.qd/NewsApp/qdnews/6.10.17',
             },
@@ -137,7 +139,7 @@ async function commonGet(url) {
                 'Connection': 'close',
                 'Accept-Encoding': 'gzip',
                 'content-type': 'application/x-www-form-urlencoded',
-                'vtoken': encrypt(`11780522,6.10.17,${Math.floor(new Date().getTime() / 1000)}`),
+                'vtoken': encrypt(`${uid},6.10.17,${Math.floor(new Date().getTime() / 1000)}`),
                 'Cookie': cookie,
                 'User-Agent': 'Mozilla/5.0 (Linux; Android 11; 21091116AC Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.85 Mobile Safari/537.36/com.qdnews.qd/NewsApp/qdnews/6.10.17',
             }
@@ -168,7 +170,7 @@ async function readGet(url,rd) {
                 'Connection': 'close',
                 'Accept-Encoding': 'gzip',
                 'content-type': 'application/x-www-form-urlencoded',
-                'vtoken': encrypt(`11780522,6.10.17,${Math.floor(new Date().getTime() / 1000)},d289f23b370f585e`),
+                'vtoken': encrypt(`${uid},6.10.17,${Math.floor(new Date().getTime() / 1000)},d289f23b370f585e`),
                 'Cookie': cookie,
                 'rd': `["${rd}"]`,
                 'User-Agent': 'Mozilla/5.0 (Linux; Android 11; 21091116AC Build/RP1A.200720.011; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/94.0.4606.85 Mobile Safari/537.36/com.qdnews.qd/NewsApp/qdnews/6.10.17',
