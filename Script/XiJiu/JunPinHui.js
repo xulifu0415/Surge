@@ -50,10 +50,10 @@ async function main() {
         console.log("开始抽奖")
         let time = (new Date).valueOf();
         let sign = getSign(time,{"wxToken":token,"actId":actId})
-        let getId = await drawPost(`/activity/user/get/by/token?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appkey":appkey,"sign":sign,"timestamp":time},"admJson":{"wxToken":token,"actId":actId}}})
+        let getId = await drawPost(`/activity/user/get/by/token?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appKey":appkey,"sign":sign,"timestamp":time},"admJson":{"wxToken":token,"actId":actId}}})
         time = (new Date).valueOf();
         sign = getSign(time,{"id":getId.data.data.id,"actId":actId})
-        let taskList = await drawPost(`/mission/completeState?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appkey":appkey,"sign":sign,"timestamp":time},"admJson":{"id":getId.data.data.id,"actId":actId}}})
+        let taskList = await drawPost(`/mission/completeState?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appKey":appkey,"sign":sign,"timestamp":time},"admJson":{"id":getId.data.data.id,"actId":actId}}})
         for (const task of taskList.data.data) {
             console.log(`任务：${task.missionName}`)
             if (task.type == "inviteJoinMember" || task.type == "payOrder") {
@@ -64,7 +64,7 @@ async function main() {
             } else {
                 time = (new Date).valueOf();
                 sign = getSign(time,{"missionType":task.type,"id":getId.data.data.id,"actId":actId})
-                let completeMission = await drawPost(`/mission/completeMission?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appkey":appkey,"sign":sign,"timestamp":time},"admJson":{"missionType":task.type,"id":getId.data.data.id,"actId":actId}}})
+                let completeMission = await drawPost(`/mission/completeMission?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appKey":appkey,"sign":sign,"timestamp":time},"admJson":{"missionType":task.type,"id":getId.data.data.id,"actId":actId}}})
                 if (completeMission.data.status == 200) {
                     console.log(completeMission.data.data.remark)
                 } else {
@@ -75,7 +75,7 @@ async function main() {
         while (true) {
             time = (new Date).valueOf();
             sign = getSign(time,{"id":getId.data.data.id,"actId":actId})
-            let draw = await drawPost(`/awards/draw?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appkey":appkey,"sign":sign,"timestamp":time},"admJson":{"id":getId.data.data.id,"actId":actId}}})
+            let draw = await drawPost(`/awards/draw?mix_nick=${token}`,{"jsonRpc":"2.0","params":{"commonParameter":{"appKey":appkey,"sign":sign,"timestamp":time},"admJson":{"id":getId.data.data.id,"actId":actId}}})
             if (draw.data.status == 200) {
                 console.log(`抽奖获得：${draw.data.data.awardName}`)
             } else {
