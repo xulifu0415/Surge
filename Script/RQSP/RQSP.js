@@ -3,6 +3,7 @@ let RQSP = ($.isNode() ? JSON.parse(process.env.RQSP) : $.getjson("RQSP")) || []
 const CryptoJS =  createCryptoJS();
 var i = "esUduuwNT2g3KA1Fd7x1GJdeXXS", n = "wuQwsdcQqfX3xsaDMv2bNvjjjTSXs"
 let token=''
+let gameSign = '27e62bcda781fd30633e08f8810e5bad'
 let notice = ''
 let userId = ''
 let userName = ''
@@ -44,10 +45,11 @@ async function main() {
         let userDetail = await commonGet('/user-center/detail?type=1')
         userName = userDetail.data.real_name;
         avatar = userDetail.data.avatar;
+        let rank = await gamePost(`ac=rank`,body('ac=rank'));
+        let score = parseInt(rank.data.my.score);
+        console.log(`当前得分：${score} 当前排名：${rank.data.my.rank}名`)
         let config = await gamePost(`ac=config`,body('ac=config'));
-        let score = parseInt(config.data.userInfo.score);
-        console.log(`当前得分：${score}`)
-        if (config.data.userInfo.playNum > 0) {
+        for (let i = 0; i < config.data.userInfo.playNum; i++) {
             score += getRandomInt(300, 400);
             if (score >= 20000) {
                 console.log(`得分大于最高限制得分`)
@@ -58,14 +60,15 @@ async function main() {
                 await $.wait(10000)
                 let gameover = await gamePost(`ac=gameover`,`param=${AesEncode(body('ac=gameover',score))}`);
                 if (gameover.code == 0) {
-                    console.log(`游戏得分：${gameover.data.score}`)
+                    console.log(`游戏结束`)
                 } else {
                     console.log(gameover.message)
                 }
             }
+            rank = await gamePost(`ac=rank`,body('ac=rank'));
+            score = parseInt(rank.data.my.score);
+            console.log(`当前得分：${score} 当前排名：${rank.data.my.rank}名`)
         }
-        let rank = await gamePost(`ac=rank`,body('ac=rank'));
-        console.log(`当前排名：${rank.data.my.rank}名`)
         console.log("————————————")
         console.log("积分抽奖")
         let detail = await commonPost(`/activity-center/luck-draw/detail`);
@@ -267,9 +270,9 @@ function AesEncode(t) {
 function body(url,score) {
     let time = parseInt((new Date).getTime() / 1e3);
     if (url == 'ac=gameover') {
-        return `user_id=${userId}&userName=${userName}&avatar=${avatar}&showRank=false&invite_user_id=&sign=6578849276f8cacacfc6901571240d54&score=${score}&timestamp=${time}&mysign=${mySign(url, time, score)}`
+        return `user_id=${userId}&userName=${userName}&avatar=${avatar}&showRank=false&invite_user_id=&sign=${gameSign}&score=${score}&timestamp=${time}&mysign=${mySign(url, time, score)}`
     } else {
-        return `user_id=${userId}&userName=${userName}&avatar=${avatar}&showRank=false&invite_user_id=&sign=6578849276f8cacacfc6901571240d54&timestamp=${time}&mysign=${mySign(url, time, score)}`
+        return `user_id=${userId}&userName=${userName}&avatar=${avatar}&showRank=false&invite_user_id=&sign=${gameSign}&timestamp=${time}&mysign=${mySign(url, time, score)}`
     }
 }
 
