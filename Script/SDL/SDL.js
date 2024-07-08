@@ -18,6 +18,10 @@ async function main() {
         console.log(`用户：${id}开始任务`)
         console.log('开始签到')
         let sign = await commonPost('/coupon/auth/signIn', {"miniappId":159})
+        if (sign.status == 401) {
+            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
+            continue
+        }
         if (sign.code == 200) {
             console.log(`签到成功，${sign.data.integralToastText}`)
         } else {
@@ -98,52 +102,12 @@ async function commonPost(url,body) {
         $.post(options, async (err, resp, data) => {
             try {
                 if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    await $.wait(2000)
-                    resolve(JSON.parse(data));
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
-async function commonGet(url) {
-    return new Promise(resolve => {
-        const options = {
-            url: `https://xiaodian.miyatech.com/api${url}`,
-            headers : {
-                'Connection': 'keep-alive',
-                'X-VERSION': '2.1.3',
-                'HH-VERSION': '0.2.8',
-                'HH-FROM': '20230130307725',
-                'componentSend': '1',
-                'HH-APP': 'wxb33ed03c6c715482',
-                'appPublishType': '1',
-                'content-type': 'application/json;charset=UTF-8',
-                'xweb_xhr': '1',
-                'Authorization': token,
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36 MicroMessenger/6.8.0(0x16080000) NetType/WIFI MiniProgramEnv/Mac MacWechat/WMPF MacWechat/3.8.7(0x13080712) XWEB/1191',
-                'HH-CI': 'saas-wechat-app',
-                'accept': '*/*',
-                'Sec-Fetch-Site': 'cross-site',
-                'Sec-Fetch-Mode': 'cors',
-                'Sec-Fetch-Dest': 'empty',
-                'Referer': `https://servicewechat.com/wxb33ed03c6c715482/28/page-frame.html`,
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Accept-Language': 'zh-CN,zh;q=0.9',
-            }
-        }
-        $.get(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                    if (data) {
+                        resolve(JSON.parse(data));
+                    } else {
+                        console.log(`${JSON.stringify(err)}`)
+                        console.log(`${$.name} API请求失败，请检查网路重试`)
+                    }
                 } else {
                     await $.wait(2000)
                     resolve(JSON.parse(data));

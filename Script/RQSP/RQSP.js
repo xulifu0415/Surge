@@ -3,7 +3,7 @@ let RQSP = ($.isNode() ? JSON.parse(process.env.RQSP) : $.getjson("RQSP")) || []
 const CryptoJS =  createCryptoJS();
 var i = "esUduuwNT2g3KA1Fd7x1GJdeXXS", n = "wuQwsdcQqfX3xsaDMv2bNvjjjTSXs"
 let token=''
-let gameSign = '27e62bcda781fd30633e08f8810e5bad'
+let gameSign = 'aacc82e807da488489c23f5cc74f6190'
 let notice = ''
 let userId = ''
 let userName = ''
